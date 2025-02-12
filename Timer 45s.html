@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer de 45 segundos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        #timer {
+            font-size: 48px;
+            margin: 20px;
+        }
+        button {
+            font-size: 20px;
+            margin: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+        button img {
+            width: 32px;
+            height: 32px;
+        }
+    </style>
+</head>
+<body>
+    <div id="timer">45</div>
+    <button onclick="togglePause()"><img id="playPauseIcon" src="https://img.icons8.com/ios-filled/50/play.png" alt="Play"></button>
+    <button onclick="resetTimer()"><img src="https://img.icons8.com/ios-filled/50/restart.png" alt="Restart"></button>
+    
+    <script>
+        let timeLeft = 45;
+        let timerInterval;
+        let isPaused = true;
+        const playPauseIcon = document.getElementById("playPauseIcon");
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (!isPaused && timeLeft > 0) {
+                    timeLeft--;
+                    document.getElementById("timer").textContent = timeLeft;
+                }
+                if (timeLeft === 0) {
+                    clearInterval(timerInterval);
+                }
+            }, 1000);
+        }
+
+        function togglePause() {
+            if (timerInterval === undefined) {
+                startTimer();
+            }
+            isPaused = !isPaused;
+            playPauseIcon.src = isPaused ? "https://img.icons8.com/ios-filled/50/play.png" : "https://img.icons8.com/ios-filled/50/pause.png";
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timerInterval = undefined;
+            timeLeft = 45;
+            document.getElementById("timer").textContent = timeLeft;
+            isPaused = true;
+            playPauseIcon.src = "https://img.icons8.com/ios-filled/50/play.png";
+        }
+    </script>
+</body>
+</html>
